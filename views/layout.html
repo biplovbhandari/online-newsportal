@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html ng-app='mainApp'>
+<head>
+    <title><?=response.title or app_settings["system_name"]?></title>
+
+    <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+    <meta http-equiv='X-UA-Compatible' content="IE=edge<?=not request.is_local and ',chrome=1' or ''?>">
+    <meta name='viewport' content='initial-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='application-name' content='<?=request.application?>'>
+    <meta name='google-site-verification' content=''>
+
+    <link rel='shortcut icon' href="<?=URL('static','images/favicon.ico')?>" type='image/x-icon'>
+    <link rel='apple-touch-icon' href="<?=URL('static','images/favicon.png')?>">
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+
+    <!-- Load the Angular CSS along with the icons -->
+    <link rel='stylesheet' type='text/css' href="<?=URL('static','angular/lib/css/angular-material.css')?>">
+    <link rel='stylesheet' type='text/css' href="<?=URL('static','angular/lib/css/angular-material-icons.css')?>">
+    <link rel="stylesheet" href="<?=URL('static','fa/css/font-awesome.min.css')?>"/>
+
+    <style type='text/css'>
+        /** Hide when Angular is not yet loaded and initialized */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <!-- modernizr enables HTML5 elements & feature detects -->
+    <script src="<?=URL('static','js/modernizr-2.8.3.min.js')?>"></script>
+
+    <!-- Lodash Library -->
+    <script type='text/javascript' src="<?=URL('static','js/lodash.min.js')?>"></script>
+
+    <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
+    <?include 'web2py_ajax.html'?>
+
+    <!-- Angular JS -->
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular.min.js')?>"></script>
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-aria.min.js')?>"></script>
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-animate.min.js')?>"></script>
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-sanitize.min.js')?>"></script>
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-messages.min.js')?>"></script>
+
+    <!-- Angular Materials -->
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-material.min.js')?>"></script>
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-material-icons.js')?>"></script>
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="<?=URL('static', 'js/default/web2py-angular.js')?>"></script>
+
+    <!-- Boostrap the app -->
+    <?include 'angular_module.html'?>
+
+    <!-- Controllers -->
+    <script type='text/javascript' src="<?=URL('static','angular/controllers/AppCtrl.js')?>"></script>
+
+    <!-- Services -->
+    <script type='text/javascript' src="<?=URL('static', 'angular/services/menu.service.js')?>"></script>
+
+    <!-- Custom Directives -->
+    <script type="text/javascript" src="<?=URL('static', 'angular/directives/menu-toggle.js')?>"></script>
+	<script type="text/javascript" src="<?=URL('static', 'angular/directives/menu-link.js')?>"></script>
+
+    <!-- Custom styling -->
+    <link rel='stylesheet' type='text/css' href="<?=URL('static','css/default/web2py-angular.css')?>">
+    <link rel='stylesheet' type='text/css' href="<?=URL('static','css/default/header.css')?>">
+    <link rel='stylesheet' type='text/css' href="<?=URL('static','css/default/side-nav.css')?>">
+    <link rel='stylesheet' type='text/css' href="<?=URL('static','css/auth/login.css')?>">
+
+    <?
+    sidenav_enabled = globals().get('sidenav_enabled', True)
+    menu_enabled = globals().get('menu_enabled', True)
+    ?>
+</head>
+
+<body layout="row" ng-controller='AppCtrl' ng-cloak>
+    <!-- Side Navbar ======================================= -->
+    <?if sidenav_enabled:?>
+        <?include 'sidebar_nav.html'?>
+	<?pass?>
+
+    <div id='wrapper' tabIndex="-1" layout='column' flex layout-padding>
+        <!-- Header ======================================= -->
+        <?if menu_enabled:?>
+            <?include 'menu_bar.html'?>
+        <?pass?>
+
+  		<div id='body' layout='column' flex>
+            <header id='page-header'>
+                <h1><?=response.title or app_settings["system_name"]?></h1>
+            </header>
+  			<!-- Main Container ======================================= -->
+			<md-content flex layout-fill>
+                <?block main_body?>
+                <?end main_body?>
+            </md-content>
+  		</div>
+</body>
+</html>
+<!-- Need at least one pass to parse -->
+<?pass?>

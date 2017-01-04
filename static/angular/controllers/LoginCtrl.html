@@ -1,0 +1,46 @@
+<script>
+
+	angular.module('mainApp')
+	.controller('LoginCtrl', function($scope, $http, $sanitize, $location) {
+
+	    var authData = {};
+
+	    $scope.showLoginForm = true;
+	    $scope.showLoginProgressIndicator = false;
+
+	    var hideLoginProgressIndicator = function() {
+	        $scope.showLoginProgressIndicator = false;
+	    }
+
+	    var showLoginProgressIndicator = function() {
+	        $scope.showLoginProgressIndicator = true;
+	    }
+
+	    var hideLoginForm = function() {
+	        $scope.showLoginForm = false;
+	    }
+
+	    var showLoginForm = function() {
+	        $scope.showLoginForm = true;
+	    }
+
+		$scope.tryLogin = function (loginData) {
+
+	        // Hide Login Form
+	        hideLoginForm();
+
+	        // Show login progress Indicator
+			showLoginProgressIndicator();
+
+			// Sanitize input
+			var email = sanitizeString(loginData.email);
+			var password = sanitizeString(loginData.password);
+	    };
+
+		var sanitizeString = function(string) {
+			return $sanitize(string);
+		};
+	});
+
+
+</script>

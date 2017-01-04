@@ -1,0 +1,25 @@
+<?if not auth.user:?>
+    <?sidenav_enabled=False?>
+<?pass?>
+<?extend 'layout.html'?>
+<?include 'angular_module.html'?>
+
+<!--{{if 'message' in globals():}}
+<h4>"message" (Web2py): {{=message}}</h4>
+<p>Above "message" is set in the Web2py controller and is evaluated server side by the Web2py view.</p>
+<div ng-app='mainApp'>
+    <div ng-controller='mainCtrl'>
+        <h4>"message" (Angular): [[message]]</h4>
+        <p>Above "message" is set in angular data model and evaluated client side.</p>
+        <h4>"databindMessage": [[databindMessage]]</h4>
+        <p>Angular variable set to Web2py's "message"</p>
+        <h4>Type "yourMessage" here: <input type="text" ng-model="yourMessage" placeholder="yourMessage"></h4>
+        <h4>See "yourMessage" here: [[yourMessage]]</h4>
+        <p>Above is an example of how changing the angular data model in one place updates everywhere the variable is used.</p>
+        <h4>Update "databindMessage" here: <input type="text" ng-model="databindMessage"></h4>
+        <h4>See "databindMessage" change: [[databindMessage]]</h4>
+        <p>Notice that "databindMessage" changes in all of the places displaying Angular's "databindMessage" variable but not in the places displaying the Web2py message variable.</p>
+    </div>
+</div>
+
+{{pass}}-->

@@ -1,0 +1,24 @@
+<?default_functions = ["login", "register", "retrieve_password"]?>
+<?if request.args(0) in default_functions:?>
+	<?sidenav_enabled=False?>
+	<?menu_enabled=False?>
+<?pass?>
+
+<?extend "layout.html"?>
+<?include "angular_module.html"?>
+<?include "../static/angular/controllers/AppCtrl.js"?>
+<?include "../static/angular/controllers/LoginCtrl.js"?>
+<?block main_body?>
+	<?try:?><?=form?><?except:?><?pass?>
+<?end main_body?>
+
+<?block page_js?>
+<script>
+    jQuery("#web2py_user_form input:visible:enabled:first").focus();
+	<?if request.args(0)=='register':?>
+    	web2py_validate_entropy(jQuery('#auth_user_password'),100);
+	<?elif request.args(0)=='change_password':?>
+    	web2py_validate_entropy(jQuery('#no_table_new_password'),100);
+	<?pass?>
+</script>
+<?end page_js?>

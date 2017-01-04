@@ -1,0 +1,66 @@
+<md-content id='main-header'>
+	<!-- Header Navbar ======================================= -->
+	<md-menu style='float: right;' md-position-mode="target-right bottom">
+        <?if auth.user:?>
+			<md-button aria-label="auth-menu" ng-click="$mdOpenMenu()">
+				<!--<img class='user-avatar' src="<?=URL('static', 'images/noavatar.png')?>" style='height: 4em;'/>-->
+				<span class="user-name">
+					<?=auth.user.email?>
+					<i class="fa fa-angle-double-down" aria-hidden="true"></i>
+				</span>
+			</md-button>
+			<md-menu-content width="4">
+				<md-list-item ng-repeat='item in authNavMenuLoggedIn'>
+					<md-button href='<?=URL(c="{{item.link.c}}" or "", f="{{item.link.f}}" or "")?>'>
+						<i class="{{item.icon}}" aria-hidden="true"></i>
+						{{item.title}}
+					</md-button>
+				</md-list-item>
+			</md-menu-content>
+		<?else:?>
+			<md-button aria-label="auth-menu" ng-click="$mdOpenMenu()">
+				<!--<img class='user-avatar' src="<?=URL('static', 'images/noavatar.png')?>" style='height: 4em;'/>-->
+				<span class="user-name">
+					Login
+					<i class="fa fa-angle-double-down" aria-hidden="true"></i>
+				</span>
+			</md-button>
+			<md-menu-content width="4">
+				<md-list-item ng-repeat='_item in authNavMenu'>
+					<md-button href='<?=URL(c="{{_item.link.c}}" or "", f="{{_item.link.f}}" or "")?>'>
+						<i class="{{_item.icon}}" aria-hidden="true"></i>
+						{{_item.title}}
+					</md-button>
+				</md-list-item>
+			</md-menu-content>
+
+			<!--<md-button aria-label="phone menu" ng-click="$mdOpenMenu()">
+				<img class='user-avatar' src="<?=URL('static', 'images/noavatar.png')?>" style='height: 4em;'/>
+				<span class="user-name">
+					Login
+					<i class="fa fa-angle-double-down" aria-hidden="true"></i>
+				</span>
+			</md-button>
+			<md-menu-content width="4">
+				<md-menu-item>
+					<md-button>
+	  				<i class="fa fa-cogs" aria-hidden="true"></i>
+	  				Sign Up
+					</md-button>
+				</md-menu-item>
+				<md-menu-item>
+					<md-button>
+	  				<i class="fa fa-cogs" aria-hidden="true"></i>
+	  				Lost Password
+					</md-button>
+				</md-menu-item>
+				<md-menu-item>
+					<md-button disabled="disabled">
+	  				<i class="fa fa-sign-out" aria-hidden="true"></i>
+	  				Log In
+					</md-button>
+				</md-menu-item>
+			</md-menu-content>-->
+        <?pass?>
+	</md-menu>
+</md-content>

@@ -1,0 +1,45 @@
+body {
+  background: #eee;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  background-color: #f7f8f9;
+  font-weight: 200;
+}
+
+#menu-button {
+	float: left;
+	height: 5em;
+	width: 5em;
+}
+
+/* user menu */
+span.user-name {
+	color: white;
+}
+
+/* sidenav */
+.logo > img {
+	height: 100px;
+	display: flex;
+}
+
+md-content#main-header {
+	background-color: #5a6667; 
+}
+
+/** Logo **/
+md-sidenav .logo {
+	text-decoration: none;
+}
+
+.logo-heading {
+	text-align: center;
+}
+
+/** Error **/
+md-input-container .error {
+	float: left;
+    color: red;
+}

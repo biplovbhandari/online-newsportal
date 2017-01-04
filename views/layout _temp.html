@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html ng-app="mainApp">
+<head>
+    <title>{{=response.title or app_settings["system_name"]}}</title>
+
+    <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+    <meta http-equiv='X-UA-Compatible' content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
+    <meta name='viewport' content='initial-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='application-name' content='{{=request.application}}'>
+    <meta name='google-site-verification' content=''>
+
+    <link rel='shortcut icon' href="{{=URL('static','images/favicon.ico')}}" type='image/x-icon'>
+    <link rel='apple-touch-icon' href="{{=URL('static','images/favicon.png')}}">
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+
+    <!-- Load the Angular CSS along with the icons -->
+    <link rel='stylesheet' type='text/css' href="{{=URL('static','angular/lib/css/angular-material.css')}}">
+    <link rel='stylesheet' type='text/css' href="{{=URL('static','angular/lib/css/angular-material-icons.css')}}">
+    <link rel="stylesheet" href="{{=URL('static','fa/css/font-awesome.min.css')}}"/>
+
+    <style type='text/css'>
+        /** Hide when Angular is not yet loaded and initialized */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <!-- Custom styling -->
+    <link rel='stylesheet' type='text/css' href="{{=URL('static','css/default/web2py-angular.css')}}">
+    <link rel='stylesheet' type='text/css' href="{{=URL('static','css/default/header.css')}}">
+    <link rel='stylesheet' type='text/css' href="{{=URL('static','css/default/side-nav.css')}}">
+    <link rel='stylesheet' type='text/css' href="{{=URL('static','css/auth/login.css')}}">
+
+    <!-- modernizr enables HTML5 elements & feature detects -->
+    <script src="{{=URL('static','js/modernizr-2.8.3.min.js')}}"></script>
+
+    <!-- Lodash Library -->
+    <script type='text/javascript' src="{{=URL('static','js/lodash.min.js')}}"></script>
+
+    <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
+    {{include 'web2py_ajax.html'}}
+
+    <!-- Angular JS -->
+    <script type='text/javascript' src="{{=URL('static','angular/lib/js/angular.min.js')}}"></script>
+    <script type='text/javascript' src="{{=URL('static','angular/lib/js/angular-aria.min.js')}}"></script>
+    <script type='text/javascript' src="{{=URL('static','angular/lib/js/angular-animate.min.js')}}"></script>
+    <script type='text/javascript' src="{{=URL('static','angular/lib/js/angular-sanitize.min.js')}}"></script>
+    <script type='text/javascript' src="{{=URL('static','angular/lib/js/angular-messages.min.js')}}"></script>
+
+    <!-- Angular Materials -->
+    <script type='text/javascript' src="{{=URL('static','angular/lib/js/angular-material.min.js')}}"></script>
+    <script type='text/javascript' src="{{=URL('static','angular/lib/js/angular-material-icons.js')}}"></script>
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{{=URL('static', 'js/default/web2py-angular.js')}}"></script>
+
+    <!-- Boostrap the app -->
+    {{include 'angular_module.html'}}
+
+    <!-- Controllers -->
+    <script type='text/javascript' src="{{=URL('static','angular/controllers/AppCtrl.js')}}"></script>
+
+    <!-- Services -->
+    <!--<script type='text/javascript' src='app/services.js'></script>-->
+
+</head>
+
+<body>
+    {{include}}
+    <div id='wrapper' layout='column'>
+    	<!-- Header ======================================= -->
+    	<div flex='33' id='header'>
+    		<!-- Flash -->
+    		<!--<div class='flash alert alert-dismissable' style='display: none;''>
+    			{{block flash_alert}}
+            		{{=response.flash or ""}}
+            	{{end}}
+    		</div>-->
+    		<md-content flex id='main-header'>
+      			<md-button id='menu-button' class="md-icon-button md-primary" aria-hidden="true" aria-label="close">
+        			<!--<md-icon class="material-icons md-48" md-svg-src="{{=URL('static', 'angular/img/ic_close_black_1024px.svg')}}"></md-icon>
+        			<i class="material-icons md-48">close</i>-->
+        			<i class="fa fa-times fa-4x" style='color: white;'></i>
+        			<!--<md-icon md-svg-icon="{{=URL('static', 'angular/img/ic_close_black_1024px.svg')}}"></md-icon>-->
+      			</md-button>
+      			<span class='logo pull-left'>
+      				<img class='img-logo' src="{{=URL('static', 'images/logo.png')}}"/>
+      			</span>
+      			<!-- Header Navbar ======================================= -->
+      			<nav id='header-nav'>
+      				<ul class="nav pull-right">
+      					<li class="dropdown pull-left open">
+      						<a href="#"><img src="" /></a>
+      						<span class="user-name"></span>
+      					</li>
+      				</ul>
+      			</nav>
+    		</md-content>
+    	</div>
+  		<div flex='66' id='body' layout='row'>
+  			<!-- Side Navbar ======================================= -->
+  			<div flex='20' ng-controller="AppCtrl">				
+				<md-sidenav flex
+					layout='column'
+					class='md-sidenav-left md-whiteframe-z2'
+					md-component-id='left'
+					md-is-locked-open="$mdMedia('gt-md')"
+					style='max-width: 95%'>
+					<md-content role='navigation' layout-fill>
+		      			<md-list class='side-menu-list'>
+		      				<md-list-item ng-repeat="item in menu">
+		              			<i class="[[item.icon]]" aria-hidden="true"></i>
+		            			<div class='menu-title' style='padding: inherit;'>[[item.title]]</div>
+		            			<md-divider></md-divider>
+		      				</md-list-item>
+		    			</md-list>
+		    		</md-content>
+	    		</md-sidenav>
+  			</div>
+  			<!-- Main Container ======================================= -->
+  			<div flex='80' id='container'>
+  				<md-content layout-fill>
+	  				<header id='page-header'>
+	  					<h1>{{=response.title or app_settings["system_name"]}}</h1>
+		  				<!--<ol class='breadcrumb'>
+		  					<li><a href="#">Pages</a></li>
+		  					/
+		  					<li>{{=response.title or app_settings["system_name"]}}</li>
+		  				</ol>-->
+		  			</header>
+		  		</md-content>
+		  		<md-content layout-fill id='content' layout='row'>
+		  						
+		  		</md-content>
+  			</div>
+  		</div>
+    </div>
+</body>
+</html>
