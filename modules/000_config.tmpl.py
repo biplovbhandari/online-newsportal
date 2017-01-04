@@ -34,3 +34,8 @@ app_settings["system_name"] = "Online Newsportal!"
 
 # Password minimum length
 app_settings["password_min_length"] = 8
+
+# Auth settings
+app_settings["auth_registration_requires_verification"] = False
+app_settings["auth_registration_requires_approval"] = False
+app_settings["auth_reset_password_requires_verification"] = True

@@ -22,6 +22,8 @@ class Authentication(Auth):
 
     """
 
+    SYSTEM_ROLES = ["ADMIN", "AUTHENTICATED", "ANONYMOUS", "EDITOR"]
+
     def __init__(self):
 
         """ Initialise parent class & make any necessary modifications """
@@ -243,5 +245,38 @@ Thank you"""
                 fake_migrate=fake_migrate
                 )
             settings.table_event = db[settings.table_event_name]
+
+    # -------------------------------------------------------------------------
+    def check_role(self):
+        """
+            Check if any role is present in the system
+
+            @return True if present else False
+        """
+
+        table = self.settings.table_group
+
+        record = current.db(table.deleted!=True).select(table.id,
+                                                        limitby=(0, 1)
+                                                        ).first()
+        if record:
+            return True
+
+        return False
+
+    # -------------------------------------------------------------------------
+    def create_system_role(self):
+        """
+            Create System User Groups
+        """
+
+        table = self.settings.table_group
+
+        role_id = []
+        for _role in self.SYSTEM_ROLES:
+            _role_id = table.insert(role=_role)
+            role_id.append(_role_id)
+
+        return role_id
 
 # END =========================================================================

@@ -5,8 +5,6 @@
 """
 
 get_app_settings = app_settings.get
-migrate = get_app_settings("db_migrate", True)
-fake_migrate = get_app_settings("db_fake_migrate", False)
 
 ## if SSL/HTTPS is properly configured and you want all HTTP requests to
 ## be redirected to HTTPS, uncomment the line below:
@@ -16,15 +14,20 @@ if get_app_settings("l10n_readonly", True):
     # Make the Language files read-only for improved performance
     T.is_writable = False
 
+get_vars = request.get_vars
+
 ########################
 # Database Configuration
 ########################
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
+    migrate = get_app_settings("db_migrate", True)
+    fake_migrate = get_app_settings("db_fake_migrate", False)
     db_type = get_app_settings("db_type", "sqlite").lower()
     pool_size = get_app_settings("pool_size", 30)
-    
+
+    # @ToDo: Intercept sessions
     if db_type == "sqlite":
         db_string = "sqlite://storage.db"
     elif db_type == "mysql":
@@ -107,14 +110,6 @@ else:
     ## session.connect(request, response, db = MEMDB(Client()))
 
 current.db = db
-from utility import formstyle_angular_material
-## by default give a view/generic.extension to all actions from localhost
-## none otherwise. a pattern can be 'controller/function.extension'
-response.generic_patterns = ["*"]
-## choose a style for forms
-response.formstyle = formstyle_angular_material  # or 'bootstrap3_stacked' or 'bootstrap2' or other
-#response.form_label_separator = get_app_settings("form_label_separator", "")
-response.delimiters = ("<?","?>")
 
 ## (optional) optimize handling of static files
 # response.optimize_css = 'concat,minify,inline'
@@ -131,24 +126,22 @@ response.delimiters = ("<?","?>")
 ## (more options discussed in gluon/tools.py)
 #########################################################################
 
-from gluon.tools import Auth, Service, PluginManager
-import datetime, json
+from gluon.tools import Mail#, PluginManager, Service
+from authentication import Authentication
 
-auth = Auth(db)
-service = Service()
-plugins = PluginManager()
+# Auth
+current.auth = auth = Authentication()
+#auth.settings.hmac_key = app_settings(key_to_change)
+auth.define_tables(migrate=migrate, fake_migrate=fake_migrate)
+group_available = auth.check_role()
+if not group_available:
+    auth.create_system_role()
 
-## configure email
-mail = auth.settings.mailer
-login_email = get_app_settings("mail_login_email", "")
-mail.settings.server = get_app_settings("mail_server", "logging")
-mail.settings.sender = get_app_settings("mail_sender_email", None)
-mail.settings.login = get_app_settings("mail_login", None)
+# Mail
+current.mail = mail = Mail()
 
-## configure auth policy
-auth.settings.registration_requires_verification = False
-auth.settings.registration_requires_approval = False
-auth.settings.reset_password_requires_verification = True
-auth.settings.formstyle = formstyle_angular_material
+# Enable when required
+#plugins = PluginManager()
+#service = Service()
 
 # END =========================================================================
