@@ -18,6 +18,7 @@
     <!-- Load the Angular CSS along with the icons -->
     <link rel='stylesheet' type='text/css' href="<?=URL('static','angular/lib/css/angular-material.css')?>">
     <link rel='stylesheet' type='text/css' href="<?=URL('static','angular/lib/css/angular-material-icons.css')?>">
+    <link rel='stylesheet' type='text/css' href="<?=URL('static','angular/lib/css/md-data-table.min.css')?>">
     <link rel="stylesheet" href="<?=URL('static','fa/css/font-awesome.min.css')?>"/>
 
     <style type='text/css'>
@@ -42,6 +43,7 @@
     <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-animate.min.js')?>"></script>
     <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-sanitize.min.js')?>"></script>
     <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-messages.min.js')?>"></script>
+    <script type='text/javascript' src="<?=URL('static','angular/lib/js/md-data-table.min.js')?>"></script>
 
     <!-- Angular Materials -->
     <script type='text/javascript' src="<?=URL('static','angular/lib/js/angular-material.min.js')?>"></script>
@@ -93,8 +95,7 @@
             </header>
   			<!-- Main Container ======================================= -->
 			<md-content flex layout-fill>
-                <?block main_body?>
-                <?end main_body?>
+				<?include?>
             </md-content>
   		</div>
 </body>

@@ -227,16 +227,50 @@ def select():
                 orderby = '~' + orderby
     session.last_orderby = orderby
     session.last_query = request.vars.query
-    form = FORM(TABLE(TR(T('Query:'), '', INPUT(_style='width:400px',
-                _name='query', _value=request.vars.query or '',
-                requires=IS_NOT_EMPTY(
-                    error_message=T("Cannot be empty")))), TR(T('Update:'),
-                INPUT(_name='update_check', _type='checkbox',
-                value=False), INPUT(_style='width:400px',
-                _name='update_fields', _value=request.vars.update_fields
-                                    or '')), TR(T('Delete:'), INPUT(_name='delete_check',
-                _class='delete', _type='checkbox', value=False), ''),
-                TR('', '', INPUT(_type='submit', _value=T('submit')))),
+    table_container = TAG["md-table-container"](\
+                        TAG["table"](\
+                            TAG["tbody"](\
+                                (TR(T("Query:"),
+                                  "",
+                                  TAG["md-input-container"](\
+                                        INPUT(_name="query",
+                                              _value=request.vars.query or "",
+                                              requires=IS_NOT_EMPTY(
+                                                        error_message=T("Cannot be empty"))
+                                              ),
+                                        _class="md-block"
+                                )),
+                                TR(T("Update:"),
+                                   TAG["md-checkbox"](_name="update_check",
+                                                      _value=False,
+                                                      ),
+                                   TAG["md-input-container"](\
+                                        INPUT(_name="update_fields",
+                                              _value=request.vars.update_fields or ""
+                                              ),
+                                        _class="md-block"
+                                )),
+                                TR(T("Delete:"),
+                                   TAG["md-checkbox"](_name="delete_check",
+                                                      _class="delete",
+                                                      _value=False,
+                                                      ),
+                                   ""
+                                ),
+                                TR("",
+                                   "",
+                                   TAG["md-button"](T("Submit"),
+                                                         _style="width:initial;",
+                                                         _class="md-raised md-primary",
+                                                         _type="submit",
+                                                         _value=T("Submit")),
+                                        _class="md-block"
+                                )),
+                                **{"_md-body": ""}),
+                        **{"_md-table": ""})
+                        )
+
+    form = FORM(table_container,
                 _action=URL(r=request, args=request.args))
 
     tb = None
@@ -278,7 +312,11 @@ def select():
         formcsv = FORM(str(T('or import from csv file')) + " ",
                        INPUT(_type='file', _name='csvfile'),
                        INPUT(_type='hidden', _value=csv_table, _name='table'),
-                       INPUT(_type='submit', _value=T('import')))
+                       TAG["md-button"](T("Import"),
+                                        _style="width:initial;",
+                                        _class="md-raised md-primary",
+                                        _type="submit",
+                                        _value=T("Import")))
     else:
         formcsv = None
     if formcsv and formcsv.process().accepted:

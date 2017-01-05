@@ -5,12 +5,7 @@
 <?pass?>
 
 <?extend "layout.html"?>
-<?include "angular_module.html"?>
-<?include "../static/angular/controllers/AppCtrl.js"?>
-<?include "../static/angular/controllers/LoginCtrl.js"?>
-<?block main_body?>
-	<?try:?><?=form?><?except:?><?pass?>
-<?end main_body?>
+<?try:?><?=form?><?except:?><?pass?>
 
 <?block page_js?>
 <script>
