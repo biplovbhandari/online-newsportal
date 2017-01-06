@@ -152,7 +152,8 @@
       <?=T("Record id")?> <?=A(request.args[2],_href=URL('update',args=request.args[:3]))?>
     <?pass?>
   </h2>
-  <h3><?=T("Edit current record")?></h3><br/><br/><?=form?>
+  <h3><?=T("Edit current record")?></h3>
+  <?=form?>
 
 <?elif request.function=='state':?>
   <h2><?=T("Internal State")?></h2>

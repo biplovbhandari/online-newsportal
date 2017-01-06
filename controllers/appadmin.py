@@ -358,8 +358,7 @@ def update():
             record = db(db[table][key[0]] == request.vars[key[
                         0]]).select().first()
     else:
-        record = db(db[table].id == request.args(
-            2)).select().first()
+        record = db(db[table].id == request.args(2)).select().first()
 
     if not record:
         qry = query_by_table_type(table, db)

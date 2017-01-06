@@ -105,11 +105,19 @@ def formstyle_angular_material(form, fields, *args, **kwargs):
 
         _class = "form-row row hide" if hidden else "form-row row"
 
+        if isinstance(widget, (A, SPAN)):
+            # Nothing to do; just add it
+            if label:
+                label.attributes["_style"] = "color:green"
+                return DIV(label, widget, _class=_class, _id=row_id)
+            else:
+                return DIV(widget, _class=_class, _id=row_id)
+
         if isinstance(label, LABEL):
             label.attributes["_style"] = "color:green"
             input_append(label)
 
-        if isinstance(widget, INPUT):
+        if isinstance(widget, INPUT) and not isinstance(widget, SELECT):
             if "_type" in widget.attributes and \
                widget.attributes["_type"] == "checkbox":
                 # Checkbox
@@ -120,6 +128,18 @@ def formstyle_angular_material(form, fields, *args, **kwargs):
                 # Normal Input
                 # Label contained above
                 input_append(widget)
+
+        if isinstance(widget, SELECT):
+            # Get the options
+            options = widget.components
+            select = TAG["md-select"](**{"_ng-model": "dropdownSelect"})
+            select_append = select.append
+            for option in options:
+                opt_attr = option.attributes
+                select_append(TAG["md-option"](option.components[0],
+                                               _value=opt_attr["_value"],
+                                               _selected=opt_attr["_selected"]))
+            input_append(select)
 
         if hasattr(widget, "element"):
             submit = widget.element("input", _type="submit")
