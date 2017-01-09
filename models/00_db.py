@@ -110,6 +110,7 @@ else:
     ## session.connect(request, response, db = MEMDB(Client()))
 
 current.db = db
+current.app_settings = app_settings
 
 ## (optional) optimize handling of static files
 # response.optimize_css = 'concat,minify,inline'
@@ -133,9 +134,6 @@ from authentication import Authentication
 current.auth = auth = Authentication()
 #auth.settings.hmac_key = app_settings(key_to_change)
 auth.define_tables(migrate=migrate, fake_migrate=fake_migrate)
-group_available = auth.check_role()
-if not group_available:
-    auth.create_system_role()
 
 # Mail
 current.mail = mail = Mail()

@@ -4,6 +4,7 @@ from gluon import A, current, DIV, INPUT, LABEL, SELECT, SPAN, TAG, TEXTAREA
 from pydal import Field
 
 from datetime import datetime
+import os
 from uuid import uuid4
 
 # =============================================================================
@@ -39,6 +40,7 @@ modified_on_field = Field("modified_on", "datetime",
                           writable=False,
                           )
 
+# =============================================================================
 def get_meta_fields_basic():
 
     return [uuid_field,
@@ -155,5 +157,16 @@ def formstyle_angular_material(form, fields, *args, **kwargs):
     for row_id, label, widget, comment in fields:
         parent.append(render_row(row_id, label, widget, comment))
     return parent
+
+# =============================================================================
+def get_prepop_files():
+    """ Return all the prepop file in the modules/ folder """
+
+    prepop_files_path = current.app_settings["prepop_files_path"]
+
+    prepop_files = os.listdir(prepop_files_path)
+
+    return [prepop_file for prepop_file in prepop_files
+            if prepop_file.endswith(".csv")]
 
 # END =========================================================================
